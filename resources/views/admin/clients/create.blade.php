@@ -1,0 +1,153 @@
+@extends('layouts.admin')
+
+@section('title', 'Add Client')
+
+{{-- $table->string('name');
+    $table->string('email')->unique();
+    $table->string('phone')->nullable();
+    $table->string('password');
+    $table->string('passport')->nullable();
+    $table->date('birthday')->nullable();
+    $table->enum('role', ['client', 'admin'])->default('client'); --}}
+
+@section('content')
+    <main class="h-full pb-16 overflow-y-auto">
+        <div class="container my-6 px-6 mx-auto grid">
+            <!-- Breadcrumb -->
+            <nav class="flex mb-4 text-gray-700 dark:text-gray-300 text-sm" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                    <li class="inline-flex items-center">
+                        <a href="{{ route('admin.dashboard') }}" class="inline-flex items-center hover:text-purple-600">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7m-9 2v8m4-8v8m5 0h-2a2 2 0 01-2-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v8a2 2 0 01-2 2H3" />
+                            </svg>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <div class="flex items-center">
+                            <svg class="w-4 h-4 mx-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 111.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <a href="{{ route('admin.applications.index') }}" class="hover:text-purple-600">Applications</a>
+                        </div>
+                    </li>
+                    <li aria-current="page">
+                        <div class="flex items-center">
+                            <svg class="w-4 h-4 mx-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 111.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-gray-500 dark:text-gray-400">Add New</span>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
+
+            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                Add New Client
+            </h2>
+
+            <form action="{{ route('admin.clients.store') }}" method="POST" class="flex flex-col bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md space-y-6">
+                @csrf
+
+                <div class="flex gap-4 flex-col md:flex-row">
+
+                    <div class="flex flex-col w-full gap-4">
+                        <!-- Name -->
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Name</span>
+                            <input type="text" name="name" required value="{{ old('name') }}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700
+                              focus:border-purple-400 focus:outline-none focus:shadow-outline-purple
+                              dark:text-gray-300 dark:focus:shadow-outline-gray form-input" placeholder="e.g. John Doe" />
+                        </label>
+
+                        <!-- Email -->
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Email</span>
+                            <input type="email" name="email" required value="{{ old('email') }}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700
+                              focus:border-purple-400 focus:outline-none focus:shadow-outline-purple
+                              dark:text-gray-300 dark:focus:shadow-outline-gray form-input" placeholder="e.g. user@example.com" />
+                        </label>
+
+                        <!-- Phone -->
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Phone</span>
+                            <input type="tel" name="phone" value="{{ old('phone') }}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700
+                              focus:border-purple-400 focus:outline-none focus:shadow-outline-purple
+                              dark:text-gray-300 dark:focus:shadow-outline-gray form-input" placeholder="e.g. +998 94 556 6788">
+                        </label>
+
+                        <!-- Passport -->
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Passport</span>
+                            <input type="text" name="passport" value="{{ old('passport') }}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700
+                              focus:border-purple-400 focus:outline-none focus:shadow-outline-purple
+                              dark:text-gray-300 dark:focus:shadow-outline-gray form-input" placeholder="e.g. AB1234567">
+                        </label>
+                    </div>
+
+                    <div class="flex flex-col w-full gap-4">
+                        <!-- Birthday -->
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Birthday</span>
+                            <input type="date" name="birthday" value="{{ old('birthday') }}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700
+                              focus:border-purple-400 focus:outline-none focus:shadow-outline-purple
+                              dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
+                        </label>
+
+                        <!-- Role -->
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Role</span>
+                            <select name="role" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700
+                               focus:border-purple-400 focus:outline-none focus:shadow-outline-purple
+                               dark:text-gray-300 dark:focus:shadow-outline-gray form-select">
+                                <option value="client" {{ old('role') == 'client' ? 'selected' : '' }}>Client</option>
+                                <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                            </select>
+                        </label>
+
+                        <!-- Password -->
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Password</span>
+                            <div class="relative">
+                                <input type="text" id="password" name="password" required class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700
+                                  focus:border-purple-400 focus:outline-none focus:shadow-outline-purple
+                                  dark:text-gray-300 dark:focus:shadow-outline-gray form-input pr-10" placeholder="Enter password" />
+                                <button type="button" onclick="randomizePassword()" class="absolute inset-y-0 right-0 flex items-center px-2 text-gray-400 hover:text-purple-600 focus:outline-none" tabindex="-1" title="Generate random password">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582M20 20v-5h-.581M5 9a7 7 0 0114 0c0 3.866-3.134 7-7 7a7 7 0 01-7-7zm7 7v4m0 0h-4m4 0h4" />
+                                    </svg>
+                                </button>
+                                @error('password')
+                                    <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </label>
+                        <script>
+                            function randomizePassword() {
+                                const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
+                                let password = '';
+                                for (let i = 0; i < 12; i++) {
+                                    password += chars.charAt(Math.floor(Math.random() * chars.length));
+                                }
+                                document.getElementById('password').value = password;
+                            }
+                        </script>
+                    </div>
+                </div>
+
+                <div class="flex justify-end space-x-4 items-center">
+                    <a href="{{ route('admin.clients.index') }}" class="text-sm text-gray-600 dark:text-gray-400 hover:underline">
+                        Back
+                    </a>
+                    <button type="submit" class="inline-flex items-center px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-md shadow hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                        </svg>
+                        Save User
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+@endsection
