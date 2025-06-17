@@ -34,21 +34,16 @@
     <!-- Main Custom Css -->
     <link href="/client/css/custom.css" rel="stylesheet" media="screen">
 
-    @yield('styles')
+    <?php echo $__env->yieldContent('styles'); ?>
 </head>
 
 <body>
 
     <!-- Preloader Start -->
-    {{-- <div class="preloader">
-        <div class="loading-container">
-            <div class="loading"></div>
-            <div id="loading-icon"><img src="/client/images/loader.svg" alt=""></div>
-        </div>
-    </div> --}}
+    
     <!-- Preloader End -->
 
-    {{-- @include('client.sections.topbar') --}}
+    
 
     <!-- Header Start -->
     <header class="main-header">
@@ -57,104 +52,104 @@
                 <div class="container">
                     <!-- Logo Start -->
                     <a class="navbar-brand" href="./">
-                        <img src="{{ asset('client/images/logo.svg') }}" alt="Logo">
+                        <img src="<?php echo e(asset('client/images/logo.svg')); ?>" alt="Logo">
                     </a>
                     <!-- Logo End -->
 
                     <!-- Main Menu Start -->
                     <div class="collapse navbar-collapse main-menu">
-                        @if (auth()->check() && request()->routeIs('client.dashboard.*'))
+                        <?php if(auth()->check() && request()->routeIs('client.dashboard.*')): ?>
                             <div class="mx-auto">
-                                {{ Str::ucfirst(__('messages.welcome')) }}, <h5 class="d-inline-block">{{ auth()->user()->name }}</h5>
+                                <?php echo e(Str::ucfirst(__('messages.welcome'))); ?>, <h5 class="d-inline-block"><?php echo e(auth()->user()->name); ?></h5>
                             </div>
-                        @else
+                        <?php else: ?>
                             <div class="nav-menu-wrapper">
                                 <ul class="navbar-nav mr-auto" id="menu">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="./">{{ __('messages.home') }}</a>
+                                        <a class="nav-link" href="./"><?php echo e(__('messages.home')); ?></a>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#about">{{ __('messages.about_us') }}</a>
+                                        <a class="nav-link" href="#about"><?php echo e(__('messages.about_us')); ?></a>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#services">{{ __('messages.services') }}</a>
+                                        <a class="nav-link" href="#services"><?php echo e(__('messages.services')); ?></a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#consultancy">{{ __('messages.consultancy') }}</a>
+                                        <a class="nav-link" href="#consultancy"><?php echo e(__('messages.consultancy')); ?></a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#posts">{{ __('messages.posts') }}</a>
+                                        <a class="nav-link" href="#posts"><?php echo e(__('messages.posts')); ?></a>
                                     </li>
                                     <li class="nav-item d-lg-none">
-                                        @if (auth()->check())
-                                            @if (request()->routeIs('client.home') || request()->routeIs('client.contact'))
-                                                <a href="{{ route('client.dashboard.profile') }}" class="nav-link">
-                                                    @lang('messages.dashboard')
+                                        <?php if(auth()->check()): ?>
+                                            <?php if(request()->routeIs('client.home') || request()->routeIs('client.contact')): ?>
+                                                <a href="<?php echo e(route('client.dashboard.profile')); ?>" class="nav-link">
+                                                    <?php echo app('translator')->get('messages.dashboard'); ?>
                                                 </a>
-                                            @else
-                                                <a href="{{ route('client.home') }}" class="nav-link">
-                                                    @lang('messages.back_to_home')
+                                            <?php else: ?>
+                                                <a href="<?php echo e(route('client.home')); ?>" class="nav-link">
+                                                    <?php echo app('translator')->get('messages.back_to_home'); ?>
                                                 </a>
                                                 <span class="mx-2"></span>
-                                                <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                                                    @csrf
+                                                <form action="<?php echo e(route('logout')); ?>" method="POST" class="d-inline">
+                                                    <?php echo csrf_field(); ?>
                                                     <button type="submit" class="nav-link text-white bg-transparent border-0 p-0">
-                                                        @lang('messages.logout')
+                                                        <?php echo app('translator')->get('messages.logout'); ?>
                                                     </button>
                                                 </form>
-                                            @endif
-                                        @else
-                                            @if (request()->routeIs('client.home'))
-                                                <a href="{{ route('login') }}" class="nav-link">
+                                            <?php endif; ?>
+                                        <?php else: ?>
+                                            <?php if(request()->routeIs('client.home')): ?>
+                                                <a href="<?php echo e(route('login')); ?>" class="nav-link">
                                                     <span class="me-2">
                                                         <i class="fa-solid fa-right-to-bracket"></i>
                                                     </span>
-                                                    @lang('messages.login')
+                                                    <?php echo app('translator')->get('messages.login'); ?>
                                                 </a>
-                                            @else
-                                                <a href="{{ route('client.home') }}" class="nav-link text-white">
-                                                    @lang('messages.back_to_home')
+                                            <?php else: ?>
+                                                <a href="<?php echo e(route('client.home')); ?>" class="nav-link text-white">
+                                                    <?php echo app('translator')->get('messages.back_to_home'); ?>
                                                 </a>
-                                            @endif
-                                        @endif
+                                            <?php endif; ?>
+                                        <?php endif; ?>
                                     </li>
                                 </ul>
                             </div>
-                        @endif
+                        <?php endif; ?>
 
                         <!-- Contact Now Box Start -->
                         <div class="contact-now-box d-inline-flex">
-                            @if (auth()->check())
-                                @if (request()->routeIs('client.home') || request()->routeIs('client.contact'))
-                                    <a href="{{ route('client.dashboard.profile') }}" class="btn-default">
-                                        @lang('messages.dashboard')
+                            <?php if(auth()->check()): ?>
+                                <?php if(request()->routeIs('client.home') || request()->routeIs('client.contact')): ?>
+                                    <a href="<?php echo e(route('client.dashboard.profile')); ?>" class="btn-default">
+                                        <?php echo app('translator')->get('messages.dashboard'); ?>
                                     </a>
-                                @else
-                                    <a href="{{ route('client.home') }}" class="btn-default">
-                                        @lang('messages.back_to_home')
+                                <?php else: ?>
+                                    <a href="<?php echo e(route('client.home')); ?>" class="btn-default">
+                                        <?php echo app('translator')->get('messages.back_to_home'); ?>
                                     </a>
 
                                     <span class="mx-2"></span>
 
-                                    <form action="{{ route('logout') }}" method="POST">
-                                        @csrf
+                                    <form action="<?php echo e(route('logout')); ?>" method="POST">
+                                        <?php echo csrf_field(); ?>
                                         <button type="submit" class="btn-default bg-danger text-white">
-                                            @lang('messages.logout')
+                                            <?php echo app('translator')->get('messages.logout'); ?>
                                         </button>
                                     </form>
-                                @endif
-                            @else
-                                @if (request()->routeIs('client.home'))
-                                    <a href="{{ route('login') }}" class="btn-default">
+                                <?php endif; ?>
+                            <?php else: ?>
+                                <?php if(request()->routeIs('client.home')): ?>
+                                    <a href="<?php echo e(route('login')); ?>" class="btn-default">
                                         <span class="me-2">
                                             <i class="fa-solid fa-right-to-bracket"></i>
                                         </span>
-                                        @lang('messages.login')
+                                        <?php echo app('translator')->get('messages.login'); ?>
                                     </a>
-                                @else
-                                    <a href="{{ route('client.home') }}" class="btn-default bg-danger text-white">
-                                        @lang('messages.back_to_home')
+                                <?php else: ?>
+                                    <a href="<?php echo e(route('client.home')); ?>" class="btn-default bg-danger text-white">
+                                        <?php echo app('translator')->get('messages.back_to_home'); ?>
                                     </a>
-                                @endif
-                            @endif
+                                <?php endif; ?>
+                            <?php endif; ?>
                         </div>
                         <!-- Contact Now Box End -->
                     </div>
@@ -169,7 +164,7 @@
     <!-- Header End -->
 
 
-    @yield('content')
+    <?php echo $__env->yieldContent('content'); ?>
 
 
 
@@ -182,13 +177,13 @@
                     <div class="about-footer">
                         <!-- Footer Logo Start -->
                         <div class="footer-logo">
-                            <img src="{{ asset('client/images/footer-logo.svg') }}" alt="">
+                            <img src="<?php echo e(asset('client/images/footer-logo.svg')); ?>" alt="">
                         </div>
                         <!-- Footer Logo End -->
 
                         <!-- About Footer Content Start -->
                         <div class="about-footer-content">
-                            <p>{{ __('messages.footer_headline') }}</p>
+                            <p><?php echo e(__('messages.footer_headline')); ?></p>
                         </div>
                         <!-- About Footer Content End -->
 
@@ -208,12 +203,12 @@
                 <div class="col-lg-3 col-md-4 col-6">
                     <!-- Footer Links Start -->
                     <div class="footer-links">
-                        <h3>@lang('messages.footer_work_visas_title')</h3>
+                        <h3><?php echo app('translator')->get('messages.footer_work_visas_title'); ?></h3>
                         <ul>
-                            <li><a href="{{ route('client.contact') }}">@lang('messages.footer_germany_job_visa')</a></li>
-                            <li><a href="{{ route('client.contact') }}">@lang('messages.footer_required_documents')</a></li>
-                            <li><a href="{{ route('client.contact') }}">@lang('messages.footer_visa_application_process')</a></li>
-                            <li><a href="{{ route('client.contact') }}">@lang('messages.footer_faq')</a></li>
+                            <li><a href="<?php echo e(route('client.contact')); ?>"><?php echo app('translator')->get('messages.footer_germany_job_visa'); ?></a></li>
+                            <li><a href="<?php echo e(route('client.contact')); ?>"><?php echo app('translator')->get('messages.footer_required_documents'); ?></a></li>
+                            <li><a href="<?php echo e(route('client.contact')); ?>"><?php echo app('translator')->get('messages.footer_visa_application_process'); ?></a></li>
+                            <li><a href="<?php echo e(route('client.contact')); ?>"><?php echo app('translator')->get('messages.footer_faq'); ?></a></li>
                         </ul>
                     </div>
                     <!-- Footer Links End -->
@@ -222,11 +217,11 @@
                 <div class="col-lg-3 col-md-3 col-6">
                     <!-- Footer Links Start -->
                     <div class="footer-links">
-                        <h3>@lang('messages.footer_quick_links_title')</h3>
+                        <h3><?php echo app('translator')->get('messages.footer_quick_links_title'); ?></h3>
                         <ul>
-                            <li><a href="about.html">@lang('messages.footer_quick_links_about')</a></li>
-                            <li><a href="services.html">@lang('messages.footer_quick_links_services')</a></li>
-                            <li><a href="team.html">@lang('messages.footer_quick_links_team')</a></li>
+                            <li><a href="about.html"><?php echo app('translator')->get('messages.footer_quick_links_about'); ?></a></li>
+                            <li><a href="services.html"><?php echo app('translator')->get('messages.footer_quick_links_services'); ?></a></li>
+                            <li><a href="team.html"><?php echo app('translator')->get('messages.footer_quick_links_team'); ?></a></li>
                         </ul>
                     </div>
                     <!-- Footer Links End -->
@@ -235,8 +230,8 @@
                 <div class="col-lg-3 col-md-5">
                     <!-- Footer Newsletter Box Start -->
                     <div class="footer-newsletter-box footer-links">
-                        <h3>@lang('messages.footer_newsletter_title')</h3>
-                        <p>@lang('messages.footer_newsletter_text')</p>
+                        <h3><?php echo app('translator')->get('messages.footer_newsletter_title'); ?></h3>
+                        <p><?php echo app('translator')->get('messages.footer_newsletter_text'); ?></p>
                     </div>
                     <!-- Footer Newsletter Box End -->
                 </div>
@@ -248,7 +243,7 @@
                     <div class="col-md-6">
                         <!-- Footer Copyright Start -->
                         <div class="footer-copyright-text">
-                            <p>@lang('messages.copyright')</p>
+                            <p><?php echo app('translator')->get('messages.copyright'); ?></p>
                         </div>
                         <!-- Footer Copyright End -->
                     </div>
@@ -257,8 +252,8 @@
                         <!-- Footer Menu Start -->
                         <div class="footer-menu">
                             <ul>
-                                <li><a href="{{ route('client.home') }}">{{ __('messages.footer_quick_links_home') }}</a></li>
-                                <li><a href="{{ route('client.home') . '#about' }}">{{ __('messages.footer_quick_links_about') }}</a></li>
+                                <li><a href="<?php echo e(route('client.home')); ?>"><?php echo e(__('messages.footer_quick_links_home')); ?></a></li>
+                                <li><a href="<?php echo e(route('client.home') . '#about'); ?>"><?php echo e(__('messages.footer_quick_links_about')); ?></a></li>
                             </ul>
                         </div>
                         <!-- Footer Menu End -->
@@ -305,3 +300,4 @@
 </body>
 
 </html>
+<?php /**PATH /home/xuwnudbek/Laravel/visa_consulting_new/resources/views/layouts/client.blade.php ENDPATH**/ ?>
